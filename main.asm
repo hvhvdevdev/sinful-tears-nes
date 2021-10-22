@@ -1,11 +1,12 @@
 RESET:
-	SEI          ; disable IRQs
-	CLD          ; disable decimal mode
-	LDX #$40	
-	STX $4017    ; disable APU frame IRQ
-	LDX #$FF	
-	TXS          ; Set up stack
-	INX          ; now X = 0
-	STX $2000    ; disable NMI
-	STX $2001    ; disable rendering
-	STX $4010    ; disable DMC IRQs
+    SEI
+    CLD
+    LDX #$40    
+    STX $4017    
+    LDX #$FF    
+    TXS          
+    INX          
+    STX $2000    
+    STX $2001    
+    STX $4010
+    
