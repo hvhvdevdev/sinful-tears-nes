@@ -1,3 +1,6 @@
+; Project: Sinful Tears
+; Copyright (C) 2021 hvhvdevdev
+;
 ; This Source Code Form is subject to the terms of the Mozilla Public
 ; License, v. 2.0. If a copy of the MPL was not distributed with this
 ; file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -32,8 +35,8 @@
     .BANK 0
     .ORG  $0000
     
-PCC_XPOS:  .DB  0
-PCC_YPOS:  .DB  0
+PCC_XPOS:  .RS  1
+PCC_YPOS:  .RS  1
     
     .ORG  $8000
 
