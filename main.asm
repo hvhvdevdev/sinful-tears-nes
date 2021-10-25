@@ -130,7 +130,18 @@ WAIT_VBLANK:
 ;;
 ;;==============================================================================
 TILE_PALLETE:
-    .INCBIN "our.pal"
+;   Backgrounds.
+    .BYTE $05                   ; Universal Background.
+    .BYTE $1a, $1b, $07, $00    ; Background Palette 0
+    .BYTE $1a, $1b, $07, $00    ; Background Palette 1
+    .BYTE $1a, $1b, $07, $00    ; Background Palette 2
+    .BYTE $1a, $1b, $07, $00    ; Background Palette 3
+;   Sprites.
+    .BYTE $1a, $28, $04, $00    ; Sprite Palette 0
+    .BYTE $1a, $1b, $07, $00    ; Sprite Palette 1
+    .BYTE $1a, $1b, $07, $00    ; Sprite Palette 2
+    .BYTE $1a, $1b, $06         ; Sprite Palette 3
+
     
 ;;==============================================================================
 ;;
@@ -141,4 +152,8 @@ TILE_PALLETE:
     .ORG  $0000
     
     .INCBIN "our.bkg"
-    .INCBIN "our.spr"
+    ;.INCBIN "our.spr"
+    .BYTE %10000001, %00000001, %00000001, %00000001
+    .BYTE %00000001, %00000000, %00000000, %00000001
+    .BYTE %10000000, %00000000, %00000000, %00000001
+    .BYTE %00000000, %00000000, %00000000, %00000001
