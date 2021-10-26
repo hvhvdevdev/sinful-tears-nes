@@ -4,7 +4,7 @@
 ; This Source Code Form is subject to the terms of the Mozilla Public
 ; License, v. 2.0. If a copy of the MPL was not distributed with this
 ; file, You can obtain one at https://mozilla.org/MPL/2.0/.
-
+;
 ;;==============================================================================
 ;;
 ;; INES header setup.
@@ -14,7 +14,7 @@
     .INESCHR    1              ; Bank of picture data.
     .INESMAP    0              ; Mapper.
     .INESMIR    0              ; Mirror setting.
-
+;
 ;;==============================================================================
 ;;
 ;; Bank 1.
@@ -22,11 +22,11 @@
 ;;==============================================================================
     .BANK   1
     .ORG    $FFFA
-    
+;    
     .WORD   0
     .WORD   RESET
     .WORD   0
-
+;
 ;;==============================================================================
 ;;
 ;; Bank 0: Program.
@@ -100,7 +100,7 @@ FOREVER:
     STX     <PCC_XPOS
     JSR     WAIT_VBLANK 
     JMP     FOREVER
-
+;
 ;;==============================================================================
 ;;
 ;; Wait for Vblank.
@@ -122,8 +122,7 @@ WAIT_VBLANK:
     LDA     <PCC_XPOS
     STA     $2004
     RTS
-
-
+;
 ;;==============================================================================
 ;;
 ;; TILE PALLETES
@@ -141,8 +140,7 @@ TILE_PALLETE:
     .BYTE   $1b, $1b, $07, $0F    ; Sprite Palette 1
     .BYTE   $1b, $1b, $07, $0F    ; Sprite Palette 2
     .BYTE   $1b, $1b, $06         ; Sprite Palette 3
-
-    
+;   
 ;;==============================================================================
 ;;
 ;; Bank 2.
@@ -150,7 +148,7 @@ TILE_PALLETE:
 ;;==============================================================================
     .BANK   2
     .ORG    $0000
-
+;
 ;   Backgrounds.    
 BACKGROUND_DATA:
 ;   Background 0.
