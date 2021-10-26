@@ -34,12 +34,12 @@
 ;;==============================================================================
     .BANK   0
     .ORG    $0000
-    
+;    
 PCC_XPOS:   .RS     1
 PCC_YPOS:   .RS     1
-    
+;    
     .ORG    $8000
-
+;
 ;;==============================================================================
 ;;
 ;; Initialize NES
@@ -56,8 +56,8 @@ RESET:
     STX     $2000    
     STX     $2001    
     STX     $4010
-    
-  ; Setup PPU.
+;    
+;   Setup PPU.
     LDA     #%00001000
     STA     $2000
     LDA     #%00011110
@@ -68,22 +68,23 @@ RESET:
     LDA     #$00
     STA     $2006
     LDX     #$00
-    
+;
+;   Palette loading.    
   .LOAD_PALLETE:
     LDA     TILE_PALLETE, X
     STA     $2007
     INX  
     CPX     #32
     BNE     .LOAD_PALLETE
-  
-  ; Setup positions.  
+;  
+;   Setup positions.  
     LDA     #20
     STA     PCC_XPOS
     STA     PCC_YPOS
-    
-  ; Start looping forever.  
+;    
+;   Start looping forever.  
     JMP     FOREVER
-    
+;   
 ;;==============================================================================
 ;;
 ;; Loop forever.
@@ -108,10 +109,10 @@ FOREVER:
 WAIT_VBLANK:
     LDA     $2002
     BPL     WAIT_VBLANK
-  ; Tell $2003 to tell $2004 to start at $0000
+;   Tell $2003 to tell $2004 to start at $0000
     LDA     #$00
     STA     $2003
-  ; Load and store PCC_YPOS
+;   Load and store PCC_YPOS
     LDA     <PCC_YPOS
     STA     $2004
     LDA     #$00
@@ -151,15 +152,44 @@ TILE_PALLETE:
     .ORG    $0000
 
 ;   Backgrounds.    
-    .BYTE   %00001111, %00001111, %00001111, %00001111
-    .BYTE   %11110000, %11110000, %11110000, %11110000
-    .BYTE   %11110000, %11110000, %11110000, %11110000
-    .BYTE   %00001111, %00001111, %00001111, %00001111
-    .DS     4080
-     
+BACKGROUND_DATA:
+;   Background 0.
+    .BYTE   %00001111   ; 1st plane.
+    .BYTE   %00001111 
+    .BYTE   %00001111 
+    .BYTE   %00001111
+    .BYTE   %11110000 
+    .BYTE   %11110000 
+    .BYTE   %11110000 
+    .BYTE   %11110000
+    .BYTE   %11110000   ; 2nd plane.
+    .BYTE   %11110000 
+    .BYTE   %11110000 
+    .BYTE   %11110000
+    .BYTE   %00001111 
+    .BYTE   %00001111 
+    .BYTE   %00001111 
+    .BYTE   %00001111
+;
+BACKGROUND_DATA_END:
+    .DS     4096 - (BACKGROUND_DATA_END - BACKGROUND_DATA)
+;    
 ;   Sprites.
-;   Sprite 0
-    .BYTE   %10000001, %10000001, %10000001, %10000001
-    .BYTE   %10000001, %10000001, %10000001, %10000001
-    .BYTE   %00000000, %00000000, %00000000, %00000000
-    .BYTE   %00000000, %11111111, %00000000, %00000001
+;   Sprite 0.
+    .BYTE   %11111111   ; 1st plane.
+    .BYTE   %10000001   
+    .BYTE   %10000001   
+    .BYTE   %10000001
+    .BYTE   %10000001
+    .BYTE   %10000001
+    .BYTE   %10000001
+    .BYTE   %10000001   
+    .BYTE   %00000000   ; 2nd plane.
+    .BYTE   %00000000
+    .BYTE   %00000000
+    .BYTE   %00000000
+    .BYTE   %00000000
+    .BYTE   %11111111 
+    .BYTE   %00000000   
+    .BYTE   %00000001
+;
