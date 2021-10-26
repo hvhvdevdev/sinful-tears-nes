@@ -13,7 +13,7 @@
     .INESPRG  1              ; Bank of program code.
     .INESCHR  1              ; Bank of picture data.
     .INESMAP  0              ; Mapper.
-    .INESMIR  3              ; Mirror setting.
+    .INESMIR  0              ; Mirror setting.
 
 ;;==============================================================================
 ;;
@@ -67,6 +67,7 @@ RESET:
     STA  $2006
     LDA  #$00
     STA  $2006
+    LDX  #$00
     
   .LOAD_PALLETE:
     LDA  TILE_PALLETE, X
@@ -110,8 +111,6 @@ WAIT_VBLANK:
   ; Tell $2003 to tell $2004 to start at $0000
     LDA  #$00
     STA  $2003
-    LDA  #$00
-    STA  $2003
   ; Load and store PCC_YPOS
     LDA  <PCC_YPOS
     STA  $2004
@@ -126,21 +125,21 @@ WAIT_VBLANK:
 
 ;;==============================================================================
 ;;
-;; TILE PALLETE
+;; TILE PALLETES
 ;;
 ;;==============================================================================
 TILE_PALLETE:
-;   Backgrounds.
-    .BYTE  $05                   ; Universal Background.
-    .BYTE  $1a, $1b, $07, $00    ; Background Palette 0
-    .BYTE  $1a, $1b, $07, $00    ; Background Palette 1
-    .BYTE  $1a, $1b, $07, $00    ; Background Palette 2
-    .BYTE  $1a, $1b, $07, $00    ; Background Palette 3
+;   Backgrounds.    
+    .BYTE  $0F                   ; Universal Background.
+    .BYTE  $1b, $1f, $03, $0F    ; Background Palette 0
+    .BYTE  $1c, $1b, $07, $0F    ; Background Palette 1
+    .BYTE  $1d, $1b, $07, $0F    ; Background Palette 2
+    .BYTE  $1b, $1b, $07, $3D    ; Background Palette 3
 ;   Sprites.
-    .BYTE  $1a, $28, $04, $00    ; Sprite Palette 0
-    .BYTE  $1a, $1b, $07, $00    ; Sprite Palette 1
-    .BYTE  $1a, $1b, $07, $00    ; Sprite Palette 2
-    .BYTE  $1a, $1b, $06         ; Sprite Palette 3
+    .BYTE  $1c, $03, $09, $0F    ; Sprite Palette 0
+    .BYTE  $1b, $1b, $07, $0F    ; Sprite Palette 1
+    .BYTE  $1b, $1b, $07, $0F    ; Sprite Palette 2
+    .BYTE  $1b, $1b, $06         ; Sprite Palette 3
 
     
 ;;==============================================================================
@@ -153,11 +152,13 @@ TILE_PALLETE:
 
 ;   Backgrounds.    
     .DS    4096
-
-;   Sprites.    
+    .BYTE  %10000001, %00000001, %00000001, %00000001
+    .BYTE  %00000001, %00000000, %00000000, %00000001
+    
+;   Sprites.
+    .ORG   $1000
 ;   Sprite 0
     .BYTE  %10000001, %00000001, %00000001, %00000001
     .BYTE  %00000001, %00000000, %00000000, %00000001
     .BYTE  %10000000, %00000000, %00000000, %00000001
     .BYTE  %00000000, %11111111, %00000000, %00000001
-    
