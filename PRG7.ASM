@@ -29,7 +29,7 @@ Reset:
 ;       First wait to make sure PPU is stable.        
 @WaitBlank1:
         bit     $2002
-        bpl     @WaitBlank1
+        bpl     @WaitBlank1     ; Jump back to wait.
 ;        
 ;       Fill memory with 0s.
         txa                     ; X is still 0.
@@ -45,12 +45,14 @@ Reset:
         inx
         bne     @ClearMem       ; Jump back if not finished.
 ;        
-;       Second wait for vblank.
+;       Second wait for vblank. 
 @WaitBlank2:
         bit     $2002
-        bpl     @WaitBlank2
+        bpl     @WaitBlank2     ; Jump back to wait.
         jmp     Forever         ; Start looping forever.
 ;        
+;       PPU is stable at this point.
+;
 ;------------------------------------------------------------------------------;
 ;               Handle NMI.                                                    ;
 ;------------------------------------------------------------------------------;
