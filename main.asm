@@ -14,10 +14,10 @@
 ;   INES header setup.                                                         ;
 ;                                                                              ;
 ;******************************************************************************;
-    .INESPRG    1              ; Bank of program code.
-    .INESCHR    1              ; Bank of picture data.
-    .INESMAP    0              ; Mapper.
-    .INESMIR    0              ; Mirror setting.
+    .INESPRG    1               ; Bank of program code.
+    .INESCHR    1               ; Bank of picture data.
+    .INESMAP    0               ; Mapper: 0 = NROM.
+    .INESMIR    0               ; Mirror setting.
 ;
 ;******************************************************************************;
 ;                                                                              ;
@@ -25,11 +25,11 @@
 ;                                                                              ;
 ;******************************************************************************;
     .BANK   1
-    .ORG    $FFFA
+    .ORG    $FFFA               ; Interrupt vectors.
 ;    
-    .WORD   0
-    .WORD   RESET
-    .WORD   0
+    .WORD   NMI                 ; Entry point when NMI happens.
+    .WORD   RESET               ; Entry point when CPU turns on or resets.
+    .WORD   0                   ; IRQ. Not used.
 ;
 ;******************************************************************************;
 ;                                                                              ;
@@ -52,15 +52,16 @@ PCC_YPOS:   .RS     1
 RESET:
     SEI
     CLD
+;   APU initialization.
     LDX     #$40    
-    STX     $4017    
+    STX     $4017
+;   Stack initialization.    
     LDX     #$FF    
     TXS          
     INX
     STX     $2000    
     STX     $2001    
-    STX     $4010
-;    
+    STX     $4010    
 ;   Setup PPU.
     LDA     #%00001000
     STA     $2000
@@ -89,6 +90,14 @@ RESET:
 ;   Start looping forever.  
     JMP     FOREVER
 ;   
+;******************************************************************************;
+;                                                                              ;
+;   NMI: Loop forever                                                      ;
+;                                                                              ;
+;******************************************************************************;
+NMI:
+    RTI
+;
 ;******************************************************************************;
 ;                                                                              ;
 ;   FOREVER: Loop forever                                                      ;
@@ -135,7 +144,7 @@ WAIT_VBLANK:
 TILE_PALLETE:
 ;   Backgrounds.    
     .BYTE   $0F                   ; Universal Background.
-    .BYTE   $1b, $1a, $03, $0F    ; Background Palette 0
+    .BYTE   $30, $2b, $03, $0F    ; Background Palette 0
     .BYTE   $1c, $1b, $07, $0F    ; Background Palette 1
     .BYTE   $1d, $1b, $07, $0F    ; Background Palette 2
     .BYTE   $1b, $1b, $07, $3D    ; Background Palette 3
