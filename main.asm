@@ -44,7 +44,7 @@
 ;   Variables & Constants                                                      ;
 ;                                                                              ;
 ;******************************************************************************;
-FRAME_DELAY_AMOUNT  EQU     2         
+FRAME_DELAY_AMOUNT  EQU     1         
 FRAME_MOD_255:      .RS     1
 FRAME_DELAY:        .RS     1
 SPRITE_FRAME        .RS     1
@@ -53,6 +53,7 @@ SPRITE_FRAME_DELAY  .RS     1
 PCC_XPOS:           .RS     1
 PCC_YPOS:           .RS     1
 ;
+;   A B SELECT START UP DOWN LEFT RIGHT
 CONTROLLER          .RS     1
 ;    
     .ORG    $8000
@@ -156,7 +157,7 @@ RENDER:
     LDX     <SPRITE_FRAME
     LDY     <SPRITE_FRAME_DELAY
     INY
-    CPY     #4
+    CPY     #8
     BNE     .END_IF1
     LDY     #0
     .END_IF1:
@@ -194,17 +195,64 @@ FOREVER:
 ;   Otherwise, reset to 0.
     LDX     #0
     STX     <FRAME_DELAY
-;
+;   Handle input.
+    JSR     UPDATE_CONTROLLER
+    LDY     CONTROLLER
+;   RIGHT is pressed.
+    TYA
+    AND     #%00000001
+    BEQ     .CHECK_LEFT
+    LDX     <PCC_XPOS
+    INX
+    STX     <PCC_XPOS
+;   LEFT is pressed.
+    .CHECK_LEFT:
+    TYA     
+    AND     #%00000010
+    BEQ     .CHECK_DOWN
+    LDX     <PCC_XPOS
+    DEX
+    STX     <PCC_XPOS
+;   DOWN is pressed.
+    .CHECK_DOWN:
+    TYA
+    AND     #%00000100
+    BEQ     .CHECK_UP
     LDX     <PCC_YPOS
     INX
     STX     <PCC_YPOS
-    LDX     <PCC_XPOS
-    INX
-    INX 
-    STX     <PCC_XPOS
+;   UP is pressed.
+    .CHECK_UP:
+    TYA
+    AND     #%00001000
+    BEQ     .END_BUTTON_CHECK
+    LDX     <PCC_YPOS
+    DEX
+    STX     <PCC_YPOS
+    .END_BUTTON_CHECK:
+;
     JSR     RENDER
     JSR     WAIT_VBLANK 
     JMP     FOREVER
+;
+;******************************************************************************;
+;                                                                              ;
+;   UPDATE_CONTROLLER: Read controller buttons.                                ;
+;                                                                              ;
+;******************************************************************************;
+UPDATE_CONTROLLER:
+    LDA     #1
+    STA     $4016
+    LDA     #0
+    STA     $4016
+    LDX     #08
+    .LOOP:
+    LDA     $4016
+    LSR     A
+    ROL     CONTROLLER
+    DEX     
+    BNE     .LOOP
+    RTS
 ;
 ;******************************************************************************;
 ;                                                                              ;
