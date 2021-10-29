@@ -10,7 +10,9 @@
 ;*                                                                             * 
 ;*******************************************************************************
 ;
-Txt_NewGame             .db     "NEW GAME" - 64
+Txt_NewGame             .db     "NEW" - 64
+                        .db     $25
+                        .db     "GAME" - 64
                         .db     0
 Txt_Continue            .db     "CONTINUE" - 64
                         .db     0

@@ -71,7 +71,7 @@ Reset:
         lda     #1              ; Bank 1.
         sta     $8001           ; Change bank.
 ;
-        lda     $2002           ; Reset PPU high/low latch,
+        lda     $2002           ; Reset PPU high/low latch.
         lda     #0
         sta     $2006           ; Write high byte.
         sta     $2006           ; Write low byte.
@@ -92,9 +92,46 @@ Reset:
         lda     (CHRData+512), x
         sta     $2007
         inx
-        bne     @LoadCHRLoop2
-        
-        
+        bne     @LoadCHRLoop2       
+;
+;       Main menu background.
+@LoadMainMenuBg:
+        lda     $2002           ; Reset PPU high/low latch.
+        lda     #$22
+        sta     $2006           ; Write high byte.
+        lda     #$8C
+        sta     $2006           ; Write low byte.
+        ldx     #0
+@TxtLoop:
+        lda     Txt_NewGame, x
+        beq     @TxtEnd
+        inx
+        sta     $2007
+        jmp     @TxtLoop
+@TxtEnd:
+        lda     $2002           ; Reset PPU high/low latch.
+        lda     #$22
+        sta     $2006           ; Write high byte.
+        lda     #$EC
+        sta     $2006           ; Write low byte.
+        ldx     #0
+@TxtLoop1:
+        lda     Txt_Continue, x
+        beq     @TxtEnd1
+        inx
+        sta     $2007
+        jmp     @TxtLoop1
+@TxtEnd1:
+;
+;       Enable rendering.
+@EnableRendering:
+        lda     #%00011110
+        sta     $2001
+;       
+;       Disable scrolling.
+        lda     #$00
+        sta     $2005
+        sta     $2005
 ;
         jmp     Forever         ; Start looping forever.
 ;
@@ -123,7 +160,7 @@ PaletteData:
         hex     3f121314
         hex     3f161718
         hex     3f202122
-        hex     3f242526 
+        hex     3f242526
 ;
 ;------------------------------------------------------------------------------;
 ;               Text.                                                          ;

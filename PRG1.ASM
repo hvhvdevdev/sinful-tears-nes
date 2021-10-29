@@ -12,7 +12,27 @@
 ;
 NumOfTile       equ     #37
 CHRData:
-;       Tile:   0x00 exported from 0
+;       Tile:   0x00 exported from 36
+;       Plane:  0
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+;       Plane:  1
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+;
+;       Tile:   0x01 exported from 0
 ;       Plane:  0
         .db     %00000000
         .db     %01111100
@@ -32,7 +52,7 @@ CHRData:
         .db     %11000110
         .db     %11000110
 ;
-;       Tile:   0x01 exported from 1
+;       Tile:   0x02 exported from 1
 ;       Plane:  0
         .db     %00000000
         .db     %11111100
@@ -52,7 +72,7 @@ CHRData:
         .db     %11000010
         .db     %11111100
 ;
-;       Tile:   0x02 exported from 2
+;       Tile:   0x03 exported from 2
 ;       Plane:  0
         .db     %00000000
         .db     %01111100
@@ -72,7 +92,7 @@ CHRData:
         .db     %11000010
         .db     %01111100
 ;
-;       Tile:   0x03 exported from 3
+;       Tile:   0x04 exported from 3
 ;       Plane:  0
         .db     %00000000
         .db     %11111100
@@ -92,7 +112,7 @@ CHRData:
         .db     %11000010
         .db     %11111100
 ;
-;       Tile:   0x04 exported from 4
+;       Tile:   0x05 exported from 4
 ;       Plane:  0
         .db     %00000000
         .db     %11111110
@@ -112,7 +132,7 @@ CHRData:
         .db     %11000000
         .db     %11111110
 ;
-;       Tile:   0x05 exported from 5
+;       Tile:   0x06 exported from 5
 ;       Plane:  0
         .db     %00000000
         .db     %11111110
@@ -132,7 +152,7 @@ CHRData:
         .db     %11000000
         .db     %11000000
 ;
-;       Tile:   0x06 exported from 6
+;       Tile:   0x07 exported from 6
 ;       Plane:  0
         .db     %00000000
         .db     %01111110
@@ -152,7 +172,7 @@ CHRData:
         .db     %11000010
         .db     %01111100
 ;
-;       Tile:   0x07 exported from 7
+;       Tile:   0x08 exported from 7
 ;       Plane:  0
         .db     %00000000
         .db     %11000010
@@ -172,7 +192,7 @@ CHRData:
         .db     %11000010
         .db     %11000010
 ;
-;       Tile:   0x08 exported from 8
+;       Tile:   0x09 exported from 8
 ;       Plane:  0
         .db     %00000000
         .db     %11111110
@@ -192,7 +212,7 @@ CHRData:
         .db     %00010000
         .db     %11111110
 ;
-;       Tile:   0x09 exported from 9
+;       Tile:   0x0a exported from 9
 ;       Plane:  0
         .db     %00000000
         .db     %00000110
@@ -212,7 +232,7 @@ CHRData:
         .db     %10000110
         .db     %01111100
 ;
-;       Tile:   0x0a exported from 10
+;       Tile:   0x0b exported from 10
 ;       Plane:  0
         .db     %00000000
         .db     %11000010
@@ -232,7 +252,7 @@ CHRData:
         .db     %11000100
         .db     %11000010
 ;
-;       Tile:   0x0b exported from 11
+;       Tile:   0x0c exported from 11
 ;       Plane:  0
         .db     %00000000
         .db     %11000000
@@ -252,7 +272,7 @@ CHRData:
         .db     %11000000
         .db     %11111110
 ;
-;       Tile:   0x0c exported from 12
+;       Tile:   0x0d exported from 12
 ;       Plane:  0
         .db     %00000000
         .db     %11100110
@@ -272,7 +292,7 @@ CHRData:
         .db     %11000010
         .db     %11000010
 ;
-;       Tile:   0x0d exported from 13
+;       Tile:   0x0e exported from 13
 ;       Plane:  0
         .db     %00000000
         .db     %11000010
@@ -292,7 +312,7 @@ CHRData:
         .db     %11000010
         .db     %11000010
 ;
-;       Tile:   0x0e exported from 14
+;       Tile:   0x0f exported from 14
 ;       Plane:  0
         .db     %00000000
         .db     %01111100
@@ -312,7 +332,7 @@ CHRData:
         .db     %11000010
         .db     %01111100
 ;
-;       Tile:   0x0f exported from 15
+;       Tile:   0x10 exported from 15
 ;       Plane:  0
         .db     %00000000
         .db     %11111100
@@ -332,7 +352,7 @@ CHRData:
         .db     %11000000
         .db     %11000000
 ;
-;       Tile:   0x10 exported from 16
+;       Tile:   0x11 exported from 16
 ;       Plane:  0
         .db     %00000000
         .db     %01111100
@@ -352,7 +372,7 @@ CHRData:
         .db     %11000100
         .db     %01111010
 ;
-;       Tile:   0x11 exported from 17
+;       Tile:   0x12 exported from 17
 ;       Plane:  0
         .db     %00000000
         .db     %11111100
@@ -372,7 +392,7 @@ CHRData:
         .db     %11000010
         .db     %11000010
 ;
-;       Tile:   0x12 exported from 18
+;       Tile:   0x13 exported from 18
 ;       Plane:  0
         .db     %00000000
         .db     %01111110
@@ -392,7 +412,7 @@ CHRData:
         .db     %10000110
         .db     %01111100
 ;
-;       Tile:   0x13 exported from 19
+;       Tile:   0x14 exported from 19
 ;       Plane:  0
         .db     %00000000
         .db     %11111110
@@ -412,7 +432,7 @@ CHRData:
         .db     %00011000
         .db     %00011000
 ;
-;       Tile:   0x14 exported from 20
+;       Tile:   0x15 exported from 20
 ;       Plane:  0
         .db     %00000000
         .db     %11000010
@@ -432,47 +452,47 @@ CHRData:
         .db     %11000010
         .db     %01111100
 ;
-;       Tile:   0x15 exported from 21
+;       Tile:   0x16 exported from 21
 ;       Plane:  0
         .db     %00000000
-        .db     %10000010
-        .db     %10000010
-        .db     %10000010
-        .db     %10000010
+        .db     %11000110
+        .db     %11000110
+        .db     %11000110
+        .db     %11000110
         .db     %01000100
         .db     %00101000
         .db     %00010000
 ;       Plane:  1
         .db     %00000000
-        .db     %10000010
-        .db     %10000010
-        .db     %10000010
-        .db     %10000010
+        .db     %11000110
+        .db     %11000110
+        .db     %11000110
+        .db     %11000110
         .db     %01000100
         .db     %00101000
         .db     %00010000
 ;
-;       Tile:   0x16 exported from 22
+;       Tile:   0x17 exported from 22
 ;       Plane:  0
         .db     %00000000
-        .db     %10000010
-        .db     %10000010
-        .db     %10000010
-        .db     %10000010
-        .db     %10000010
+        .db     %11000110
+        .db     %11000110
+        .db     %11000110
+        .db     %11000110
+        .db     %11010110
         .db     %01010100
         .db     %00101000
 ;       Plane:  1
         .db     %00000000
-        .db     %10000010
-        .db     %10000010
-        .db     %10000010
-        .db     %10000010
-        .db     %10000010
+        .db     %11000110
+        .db     %11000110
+        .db     %11000110
+        .db     %11000110
+        .db     %11010110
         .db     %01010100
         .db     %00101000
 ;
-;       Tile:   0x17 exported from 23
+;       Tile:   0x18 exported from 23
 ;       Plane:  0
         .db     %00000000
         .db     %10000010
@@ -492,7 +512,7 @@ CHRData:
         .db     %01000100
         .db     %10000010
 ;
-;       Tile:   0x18 exported from 24
+;       Tile:   0x19 exported from 24
 ;       Plane:  0
         .db     %00000000
         .db     %10000010
@@ -512,7 +532,7 @@ CHRData:
         .db     %00010000
         .db     %00010000
 ;
-;       Tile:   0x19 exported from 25
+;       Tile:   0x1a exported from 25
 ;       Plane:  0
         .db     %00000000
         .db     %11111110
@@ -532,7 +552,7 @@ CHRData:
         .db     %01000000
         .db     %11111110
 ;
-;       Tile:   0x1a exported from 26
+;       Tile:   0x1b exported from 26
 ;       Plane:  0
         .db     %00000000
         .db     %00111100
@@ -552,7 +572,7 @@ CHRData:
         .db     %01000010
         .db     %00111100
 ;
-;       Tile:   0x1b exported from 27
+;       Tile:   0x1c exported from 27
 ;       Plane:  0
         .db     %00000000
         .db     %00011000
@@ -572,7 +592,7 @@ CHRData:
         .db     %00001000
         .db     %01111110
 ;
-;       Tile:   0x1c exported from 28
+;       Tile:   0x1d exported from 28
 ;       Plane:  0
         .db     %00000000
         .db     %00111100
@@ -592,7 +612,7 @@ CHRData:
         .db     %01000000
         .db     %01111110
 ;
-;       Tile:   0x1d exported from 29
+;       Tile:   0x1e exported from 29
 ;       Plane:  0
         .db     %00000000
         .db     %01111100
@@ -612,7 +632,7 @@ CHRData:
         .db     %00000010
         .db     %01111100
 ;
-;       Tile:   0x1e exported from 30
+;       Tile:   0x1f exported from 30
 ;       Plane:  0
         .db     %00000000
         .db     %01000100
@@ -632,7 +652,7 @@ CHRData:
         .db     %00000100
         .db     %00000100
 ;
-;       Tile:   0x1f exported from 31
+;       Tile:   0x20 exported from 31
 ;       Plane:  0
         .db     %00000000
         .db     %01111110
@@ -652,7 +672,7 @@ CHRData:
         .db     %00000010
         .db     %01111100
 ;
-;       Tile:   0x20 exported from 32
+;       Tile:   0x21 exported from 32
 ;       Plane:  0
         .db     %00000000
         .db     %00111100
@@ -672,17 +692,8 @@ CHRData:
         .db     %01000010
         .db     %00111100
 ;
-;       Tile:   0x21 exported from 33
+;       Tile:   0x22 exported from 33
 ;       Plane:  0
-        .db     %00000000
-        .db     %01111110
-        .db     %00000010
-        .db     %00000010
-        .db     %00000100
-        .db     %00000100
-        .db     %00001000
-        .db     %00001000
-;       Plane:  1
         .db     %00000000
         .db     %01111110
         .db     %00000010
@@ -691,8 +702,17 @@ CHRData:
         .db     %00000100
         .db     %00001000
         .db     %00001000
+;       Plane:  1
+        .db     %00000000
+        .db     %01111110
+        .db     %00000010
+        .db     %00000010
+        .db     %00000100
+        .db     %00000100
+        .db     %00001000
+        .db     %00001000
 ;
-;       Tile:   0x22 exported from 34
+;       Tile:   0x23 exported from 34
 ;       Plane:  0
         .db     %00000000
         .db     %00111100
@@ -712,7 +732,7 @@ CHRData:
         .db     %01000010
         .db     %00111100
 ;
-;       Tile:   0x23 exported from 35
+;       Tile:   0x24 exported from 35
 ;       Plane:  0
         .db     %00000000
         .db     %00111100
@@ -732,7 +752,27 @@ CHRData:
         .db     %01000010
         .db     %00111100
 ;
-;       Tile:   0x24 exported from 261
+;       Tile:   0x25 exported from 36
+;       Plane:  0
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+;       Plane:  1
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+        .db     %00000000
+;
+;       Tile:   0x26 exported from 261
 ;       Plane:  0
         .db     %00000000
         .db     %01111110
@@ -752,7 +792,7 @@ CHRData:
         .db     %01111110
         .db     %00100100
 ;
-;       Tile:   0x25 exported from 262
+;       Tile:   0x27 exported from 262
 ;       Plane:  0
         .db     %00000000
         .db     %00000000
@@ -772,7 +812,7 @@ CHRData:
         .db     %00000000
         .db     %00000000
 ;
-;       Tile:   0x26 exported from 263
+;       Tile:   0x28 exported from 263
 ;       Plane:  0
         .db     %00000000
         .db     %01111110
@@ -792,7 +832,7 @@ CHRData:
         .db     %01111110
         .db     %00100100
 ;
-;       Tile:   0x27 exported from 281
+;       Tile:   0x29 exported from 281
 ;       Plane:  0
         .db     %00100100
         .db     %00100100
@@ -812,7 +852,7 @@ CHRData:
         .db     %00100100
         .db     %00100100
 ;
-;       Tile:   0x28 exported from 282
+;       Tile:   0x2a exported from 282
 ;       Plane:  0
         .db     %00000000
         .db     %00111100
@@ -832,7 +872,7 @@ CHRData:
         .db     %00000000
         .db     %00001000
 ;
-;       Tile:   0x29 exported from 283
+;       Tile:   0x2b exported from 283
 ;       Plane:  0
         .db     %00100100
         .db     %00100100
@@ -852,7 +892,7 @@ CHRData:
         .db     %00100100
         .db     %00100100
 ;
-;       Tile:   0x2a exported from 301
+;       Tile:   0x2c exported from 301
 ;       Plane:  0
         .db     %00100100
         .db     %01111110
@@ -872,7 +912,7 @@ CHRData:
         .db     %01111110
         .db     %00000000
 ;
-;       Tile:   0x2b exported from 302
+;       Tile:   0x2d exported from 302
 ;       Plane:  0
         .db     %00000000
         .db     %00000000
@@ -892,7 +932,7 @@ CHRData:
         .db     %00000000
         .db     %00000000
 ;
-;       Tile:   0x2c exported from 303
+;       Tile:   0x2e exported from 303
 ;       Plane:  0
         .db     %00100100
         .db     %01111110
