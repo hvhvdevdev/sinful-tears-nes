@@ -34,14 +34,14 @@ Reset:
 ;       Fill memory with 0s.
         txa                     ; X is still 0.
 @ClearMem:
-        sta     $000,x
-        sta     $100,x
-        sta     $200,x
-        sta     $300,x
-        sta     $400,x
-        sta     $500,x
-        sta     $600,x
-        sta     $700,x
+        sta     $000, x
+        sta     $100, x
+        sta     $200, x
+        sta     $300, x
+        sta     $400, x
+        sta     $500, x
+        sta     $600, x 
+        sta     $700, x
         inx
         bne     @ClearMem       ; Jump back if not finished.
 ;        
@@ -49,9 +49,29 @@ Reset:
 @WaitBlank2:
         bit     $2002
         bpl     @WaitBlank2     ; Jump back to wait.
-        jmp     Forever         ; Start looping forever.
 ;        
 ;       PPU is stable at this point.
+;       Load initial palette.
+@LoadPalette:
+        lda     $2002           ; Reset PPU high/low latch,
+        lda     #$3f
+        sta     $2006           ; Write high byte.
+        lda     #$00
+        sta     $2006           ; Write low byte.
+        ldx     #0              ; X starts at 0.
+@LoadPaletteLoop:
+        lda     PaletteData, x  ; Load data from address of PaletteData + x
+        sta     $2007           ; Write data to PPU.
+        inx
+        cpx     #16
+        bne     @LoadPaletteLoop; Jump back if not finished.
+;
+;       Load CHR
+@LoadCHR:
+        lda     #0              ; Bank 0.
+        sta     $8000           ; Change bank.
+;
+        jmp     Forever         ; Start looping forever.
 ;
 ;------------------------------------------------------------------------------;
 ;               Handle NMI.                                                    ;
@@ -64,4 +84,24 @@ NMI:
 ;------------------------------------------------------------------------------;        
 Forever:
         jmp     Forever
+;
+;------------------------------------------------------------------------------;
+;               Palette.                                                       ;
+;------------------------------------------------------------------------------;        
+PaletteData:
+;       Background.
+        hex     3f302d3d
+        hex     3f16173d
+        hex     3f20213d
+        hex     3f24253d
+;       Sprite.
+        hex     3f121314
+        hex     3f161718
+        hex     3f202122
+        hex     3f242526 
+;
+;------------------------------------------------------------------------------;
+;               Text.                                                          ;
+;------------------------------------------------------------------------------;  
+        .include        txt.asm         ; Text.
 ;

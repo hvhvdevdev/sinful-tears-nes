@@ -21,8 +21,8 @@ Spr_Anim_Wait           equ     3       ; How many Vblank until next frame.
 ;------------------------------------------------------------------------------;
         .enum $0000
 ;
-Pcc_Xpos                .dsb    1       ; Single byte at 0x00.
-Pcc_Ypos                .dsb    1       ; Single byte at 0x01.
+Pcc_posX                .dsb    1       ; Single byte at 0x00.
+Pcc_posY                .dsb    1       ; Single byte at 0x01.
 ;
         .ende
 ;
@@ -38,27 +38,48 @@ Pcc_Ypos                .dsb    1       ; Single byte at 0x01.
 ;------------------------------------------------------------------------------;
 ;               Program banks                                                  ;
 ;------------------------------------------------------------------------------;
+;       Bank 0.
         .base           $8000
+        .hex            00010203040506  ; Bank lookup table.
         .include        prg0.asm
         .org            $c000
+;        
+;       Bank 1.
         .base           $8000
+        .hex            00010203040506  ; Bank lookup table.
         .include        prg1.asm
         .org            $c000        
+;
+;       Bank 2.        
         .base           $8000
+        .hex            00010203040506  ; Bank lookup table.
         .include        prg2.asm
         .org            $c000
+;       
+;       Bank 3.
         .base           $8000
+        .hex            00010203040506  ; Bank lookup table.
         .include        prg3.asm
         .org            $c000
+;
+;       Bank 4.
         .base           $8000
+        .hex            00010203040506  ; Bank lookup table.
         .include        prg4.asm
         .org            $c000
+;        
+;       Bank 5.
         .base           $8000
+        .hex            00010203040506  ; Bank lookup table.
         .include        prg5.asm
-        .org            $c000   
+        .org            $c000
+;        
+;       Bank 6.        
         .base           $8000
+        .hex            00010203040506  ; Bank lookup table.
         .include        prg6.asm
         .org            $c000
+;
 ;       Bank 7 is fixed.      
         .base           $c000
         .include        prg7.asm
@@ -71,3 +92,4 @@ Pcc_Ypos                .dsb    1       ; Single byte at 0x01.
         .dw             NMI             ; Called when NMI happens.
         .dw             Reset           ; Called when CPU starts or resets.
         .dw             0               ; IRQ is not used.
+;        
