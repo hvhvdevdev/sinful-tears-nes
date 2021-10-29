@@ -68,8 +68,33 @@ Reset:
 ;
 ;       Load CHR
 @LoadCHR:
-        lda     #0              ; Bank 0.
-        sta     $8000           ; Change bank.
+        lda     #1              ; Bank 1.
+        sta     $8001           ; Change bank.
+;
+        lda     $2002           ; Reset PPU high/low latch,
+        lda     #0
+        sta     $2006           ; Write high byte.
+        sta     $2006           ; Write low byte.
+        ldx     #0              ; X starts at 0.
+@LoadCHRLoop0:
+        lda     CHRData, x
+        sta     $2007
+        inx
+        bne     @LoadCHRLoop0
+        ldx     #0              ; X starts at 0.
+@LoadCHRLoop1:
+        lda     (CHRData+256), x
+        sta     $2007
+        inx
+        bne     @LoadCHRLoop1
+        ldx     #0              ; X starts at 0.
+@LoadCHRLoop2:
+        lda     (CHRData+512), x
+        sta     $2007
+        inx
+        bne     @LoadCHRLoop2
+        
+        
 ;
         jmp     Forever         ; Start looping forever.
 ;
@@ -90,7 +115,7 @@ Forever:
 ;------------------------------------------------------------------------------;        
 PaletteData:
 ;       Background.
-        hex     3f302d3d
+        hex     3f2d3d30
         hex     3f16173d
         hex     3f20213d
         hex     3f24253d
