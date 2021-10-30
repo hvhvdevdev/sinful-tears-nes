@@ -24,8 +24,7 @@ Spr_Anim_Wait           equ     3       ; How many Vblank until next frame.
 Pcc_posX                .dsb    1       ; Single byte at 0x00.
 Pcc_posY                .dsb    1       ; Single byte at 0x01.
 ;
-SrcHi                   .dsb    1       ; Single byte at 0x02.
-SrcLo                   .dsb    1       ; Single byte at 0x03.
+SrcHi                   .dsb    2       ; Two bytes at 0x02.
         .ende
 ;
 ;------------------------------------------------------------------------------;
@@ -43,48 +42,48 @@ SrcLo                   .dsb    1       ; Single byte at 0x03.
 ;       Bank 0.
         .base           $8000
         .hex            00010203040506  ; Bank lookup table.
-        .include        prg0.asm
+        .include        PRG0.ASM
         .org            $c000
 ;        
 ;       Bank 1.
         .base           $8000
         .hex            00010203040506  ; Bank lookup table.
-        .include        prg1.asm
+        .include        PRG1.ASM
         .org            $c000        
 ;
 ;       Bank 2.        
         .base           $8000
         .hex            00010203040506  ; Bank lookup table.
-        .include        prg2.asm
+        .include        PRG2.ASM
         .org            $c000
 ;       
 ;       Bank 3.
         .base           $8000
         .hex            00010203040506  ; Bank lookup table.
-        .include        prg3.asm
+        .include        PRG3.ASM
         .org            $c000
 ;
 ;       Bank 4.
         .base           $8000
         .hex            00010203040506  ; Bank lookup table.
-        .include        prg4.asm
+        .include        PRG4.ASM
         .org            $c000
 ;        
 ;       Bank 5.
         .base           $8000
         .hex            00010203040506  ; Bank lookup table.
-        .include        prg5.asm
+        .include        PRG5.ASM
         .org            $c000
 ;        
 ;       Bank 6.        
         .base           $8000
         .hex            00010203040506  ; Bank lookup table.
-        .include        prg6.asm
+        .include        PRG6.ASM
         .org            $c000
 ;
 ;       Bank 7 is fixed.      
         .base           $c000
-        .include        prg7.asm
+        .include        PRG7.ASM
 ;        
 ;------------------------------------------------------------------------------;
 ;               Interrupt vectors                                              ;
