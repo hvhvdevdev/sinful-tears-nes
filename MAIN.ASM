@@ -24,7 +24,11 @@ Spr_Anim_Wait           equ     3       ; How many Vblank until next frame.
 Pcc_posX                .dsb    1       ; Single byte at 0x00.
 Pcc_posY                .dsb    1       ; Single byte at 0x01.
 ;
-SrcHi                   .dsb    2       ; Two bytes at 0x02.
+Src                     .dsb    2       ; Two bytes at 0x02.
+;
+UiSelectCurrent         .dsb    1       ; Single byte at 0x04.
+;
+Controller              .dsb    1       ; Single byte at 0x05.
         .ende
 ;
 ;------------------------------------------------------------------------------;
