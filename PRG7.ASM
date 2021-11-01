@@ -218,6 +218,21 @@ Forever:
         sta     UiFreeze
 @EndIfBtnAny:
 ;     
+@IfBtnA:
+        txa
+;
+        and     BtnA
+        beq     @EndIfBtnA     
+;
+@IfSelectNewGame:
+        lda     #0
+        cmp     UiSelectCurrent
+        bne     @EndIfBtnA
+;
+        jsr     DgnMain
+;
+@EndIfBtnA:
+;
 ;       Check if DOWN is pressed.
 @IfBtnDown:
         txa
@@ -276,7 +291,7 @@ Forever:
 ;------------------------------------------------------------------------------;        
 PaletteData:
 ;       Background.
-        hex     3f2d3d30
+        hex     3f2d3d3c
         hex     3f16173d
         hex     3f20213d
         hex     3f24253d
