@@ -15,6 +15,11 @@
 ;------------------------------------------------------------------------------;
 Setting_Mirror          equ     %0001   ; Vertical mirroring.
 Spr_Anim_Wait           equ     3       ; How many Vblank until next frame.
+;
+BtnUp                   equ     #%00001000
+BtnDown                 equ     #%00000100
+BtnLeft                 equ     #%00000010
+BtnRight                equ     #%00000001
 ;  
 ;------------------------------------------------------------------------------;
 ;               Variables                                                      ;
@@ -27,8 +32,9 @@ Pcc_posY                .dsb    1       ; Single byte at 0x01.
 Src                     .dsb    2       ; Two bytes at 0x02.
 ;
 UiSelectCurrent         .dsb    1       ; Single byte at 0x04.
-;
-Controller              .dsb    1       ; Single byte at 0x05.
+UiFreeze                .dsb    1       ; Single byte at 0x05
+; A B SELECT START UP DOWN LEFT RIGHT
+Controller              .dsb    1       ; Single byte at 0x06.
         .ende
 ;
 ;------------------------------------------------------------------------------;
