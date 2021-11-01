@@ -146,6 +146,25 @@ WaitBlank:
 ;------------------------------------------------------------------------------;
 ;               Handle NMI.                                                    ;
 ;------------------------------------------------------------------------------;
+ReadController:
+@LatchButtons:
+        lda     #1
+        sta     $4016
+        lda     #0
+        sta     $4016
+;
+        ldx     #8
+@Loop:
+        lda     $4016
+        lsr     a
+        rol     Controller
+        dex     
+        bne @Loop
+        rts
+;
+;------------------------------------------------------------------------------;
+;               Handle NMI.                                                    ;
+;------------------------------------------------------------------------------;
 NMI:
         rti
 ;
@@ -153,7 +172,71 @@ NMI:
 ;               Loop forever.                                                  ;
 ;------------------------------------------------------------------------------;        
 Forever:
+        jsr     ReadController
+;
+@MainMenu:
+        ldx     Controller
+;
+;       Check if Ui is not freezed.
+@IfUiNotFreezed:
+        lda     #0
+        cmp     UiFreeze
+        bne     @EndIfNotFreezed
+;
+@IfBtnAny:
+        cmp     Controller
+        beq     @EndIfBtnAny
+;
+        lda     #20
+        sta     UiFreeze
+@EndIfBtnAny:
+;     
+;       Check if DOWN is pressed.
+@IfBtnDown:
+        txa
+;
+        and     BtnDown     
+        beq     @EndIfBtnDown
+;
+        inc     UiSelectCurrent
+@ShouldMoveTop:
+        lda     #2
+        cmp     UiSelectCurrent
+        bne     @EndIfBtnDown
+;
+        lda     #0
+        sta     UiSelectCurrent
+@EndIfBtnDown        
+;
+;       Check if UP is pressed.
+@IfBtnUp:
+        txa
+;
+        and     BtnUp     
+        beq     @EndIfBtnUp
+;
+        dec     UiSelectCurrent
+@ShouldMoveBottom:
+        lda     #255
+        cmp     UiSelectCurrent
+        bne     @EndIfBtnUp
+;
+        lda     #1
+        sta     UiSelectCurrent
+@EndIfBtnUp:
+@EndIfNotFreezed:
+;
+@IfFreezed:
+        lda     #0
+        cmp     UiFreeze
+        beq     @EndIfFreezed
+;               
+        dec     UiFreeze
+;
+@EndIfFreezed:
+;
         jsr     WaitBlank
+;
         jmp     Forever
 ;
 ;------------------------------------------------------------------------------;
