@@ -137,7 +137,7 @@ Reset:
 @EnableSprites:
         lda     #0
         sta     $2003
-        lda     #2
+        lda     #$20
         sta     $4014
 ;
         jmp     Forever         ; Start looping forever.
