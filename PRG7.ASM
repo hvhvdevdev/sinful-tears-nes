@@ -166,7 +166,7 @@ ReadController:
         lsr     a
         rol     Controller
         dex     
-        bne @Loop
+        bne     @Loop
         rts
 ;
 ;------------------------------------------------------------------------------;
