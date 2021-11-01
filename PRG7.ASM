@@ -133,6 +133,13 @@ Reset:
         sta     $2005
         sta     $2005
 ;
+;       Enable Sprites.
+@EnableSprites:
+        lda     #0
+        sta     $2003
+        lda     #2
+        sta     $4014
+;
         jmp     Forever         ; Start looping forever.
 ;
 ;------------------------------------------------------------------------------;
@@ -144,7 +151,7 @@ WaitBlank:
         rts
 ;
 ;------------------------------------------------------------------------------;
-;               Handle NMI.                                                    ;
+;               Read Controller States                                         ;
 ;------------------------------------------------------------------------------;
 ReadController:
 @LatchButtons:
