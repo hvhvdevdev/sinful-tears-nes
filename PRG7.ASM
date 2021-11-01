@@ -63,7 +63,7 @@ Reset:
         lda     PaletteData, x  ; Load data from address of PaletteData + x
         sta     $2007           ; Write data to PPU.
         inx
-        cpx     #16
+        cpx     #32
         bne     @LoadPaletteLoop; Jump back if not finished.
 ;
 ;       Load CHR
@@ -133,13 +133,6 @@ Reset:
         sta     $2005
         sta     $2005
 ;
-;       Enable Sprites.
-@EnableSprites:
-        lda     #0
-        sta     $2003
-        lda     #2
-        sta     $4014
-;
         jmp     Forever         ; Start looping forever.
 ;
 ;------------------------------------------------------------------------------;
@@ -180,6 +173,21 @@ NMI:
 ;------------------------------------------------------------------------------;        
 Forever:
         jsr     ReadController
+;
+        lda     #159
+        sta     $200
+        lda     #$2f
+        sta     $201
+        lda     %00000000
+        sta     $202
+        lda     #80
+        sta     $203
+;       Enable Sprites.
+@EnableSprites:
+        lda     #0
+        sta     $2003
+        lda     #2
+        sta     $4014
 ;
 @MainMenu:
         ldx     Controller
@@ -256,10 +264,10 @@ PaletteData:
         hex     3f20213d
         hex     3f24253d
 ;       Sprite.
-        hex     3f121314
-        hex     3f161718
-        hex     3f202122
-        hex     3f242526
+        hex     3f2d3d30
+        hex     3f16173d
+        hex     3f20213d
+        hex     3f24253d
 ;
 ;------------------------------------------------------------------------------;
 ;               Text.                                                          ;
