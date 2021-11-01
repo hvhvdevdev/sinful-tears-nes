@@ -174,7 +174,18 @@ NMI:
 Forever:
         jsr     ReadController
 ;
+;       Cursor
+@IfNewGame:
+        lda     #0
+        cmp     UiSelectCurrent
+        bne     @ElseNewGame
+;       
         lda     #159
+;
+        jmp     @EndIfNewGame
+@ElseNewGame:
+        lda     #183
+@EndIfNewGame:        
         sta     $200
         lda     #$2f
         sta     $201
@@ -182,6 +193,7 @@ Forever:
         sta     $202
         lda     #80
         sta     $203
+;
 ;       Enable Sprites.
 @EnableSprites:
         lda     #0
@@ -202,7 +214,7 @@ Forever:
         cmp     Controller
         beq     @EndIfBtnAny
 ;
-        lda     #20
+        lda     #10
         sta     UiFreeze
 @EndIfBtnAny:
 ;     
