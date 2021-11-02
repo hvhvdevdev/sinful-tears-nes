@@ -21,14 +21,9 @@ DgnMain:
         sta     $2006           ; Write high byte.
         lda     #$00
         sta     $2006           ; Write low byte.
-;
-;       First Four rows.
-        lda     #$0
-        ldx     #64
-@FirstFourRowsLoop:
-        sta     $2007
-        dex
-        bne     @FirstFourRowsLoop
+@FirstFourRows:
+        jsr     DrawEmptyRow
+        jsr     DrawEmptyRow
 ;
 ;       Second two rows.
         lda     #$0
