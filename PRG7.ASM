@@ -59,12 +59,11 @@ Reset:
         lda     #$00
         sta     $2006           ; Write low byte.
         ldx     #0              ; X starts at 0.
-@LoadPaletteLoop:
-        lda     PaletteData, x  ; Load data from address of PaletteData + x
+-       lda     PaletteData, x  ; Load data from address of PaletteData + x
         sta     $2007           ; Write data to PPU.
         inx
         cpx     #32
-        bne     @LoadPaletteLoop; Jump back if not finished.
+        bne     -; Jump back if not finished.
 ;
 ;       Load CHR
 @LoadCHR:
@@ -76,23 +75,20 @@ Reset:
         sta     $2006           ; Write high byte.
         sta     $2006           ; Write low byte.
         ldx     #0              ; X starts at 0.
-@LoadCHRLoop0:
-        lda     CHRData, x
+-       lda     CHRData, x
         sta     $2007
         inx
-        bne     @LoadCHRLoop0
+        bne     -
         ldx     #0              ; X starts at 0.
-@LoadCHRLoop1:
-        lda     (CHRData+256), x
+-       lda     (CHRData+256), x
         sta     $2007
         inx
-        bne     @LoadCHRLoop1
+        bne     -
         ldx     #0              ; X starts at 0.
-@LoadCHRLoop2:
-        lda     (CHRData+512), x
+-       lda     (CHRData+512), x
         sta     $2007
         inx
-        bne     @LoadCHRLoop2       
+        bne     -
 ;
 ;       Main menu background.
 @LoadMainMenuBg:
@@ -154,12 +150,11 @@ ReadController:
         sta     $4016
 ;
         ldx     #8
-@Loop:
-        lda     $4016
+-       lda     $4016
         lsr     a
         rol     Controller
         dex     
-        bne     @Loop
+        bne     -
         rts
 ;
 ;------------------------------------------------------------------------------;
@@ -291,15 +286,15 @@ Forever:
 ;------------------------------------------------------------------------------;        
 PaletteData:
 ;       Background.
-        hex     3f2d3d3c
-        hex     3f16173d
-        hex     3f20213d
-        hex     3f24253d
+        .hex     3f2d3d3c
+        .hex     3f16173d
+        .hex     3f20213d
+        .hex     3f24253d
 ;       Sprite.
-        hex     3f2d3d30
-        hex     3f16173d
-        hex     3f20213d
-        hex     3f24253d
+        .hex     3f2d3d30
+        .hex     3f16173d
+        .hex     3f20213d
+        .hex     3f24253d
 ;
 ;------------------------------------------------------------------------------;
 ;               Text.                                                          ;
