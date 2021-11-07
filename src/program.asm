@@ -69,6 +69,11 @@ Reset:
         inx
         cpx     #$20            ; Done yet?
         bne     -               ; Continue looping if not done.
+;       Enable rendering and NMI.
+        lda     #%10000000
+        sta     ADDR_PPUCONTROLLER
+        lda     #%00011110
+        sta     ADDR_PPUMASK
 ;       Start looping forever.
         jmp     Forerver
 ;
