@@ -74,6 +74,17 @@ Reset:
         sta     ADDR_PPUCONTROLLER
         lda     #%00011110
         sta     ADDR_PPUMASK
+;       Draw "Press Start".
+        lda     ADDR_PPUSTATUS
+        lda     #$22
+        sta     ADDR_PPUADDR
+        lda     #$4a
+        sta     ADDR_PPUADDR
+        lda     #<TxtPressStart
+        sta     SrcLo
+        lda     #>TxtPressStart
+        sta     SrcHi
+        jsr     DrawText
 ;       Start looping forever.
         jmp     Forerver
 ;
@@ -123,13 +134,30 @@ ReadController:
         rts
 ;
 ;===============================================================================
+;    Subroutine: DrawText
+;       Draw text to PPUDATA.
+;===============================================================================
+;
+        rts
+        rts
+DrawText:
+        ldy     #$00
+        -
+        lda     (SrcLo), y
+        sta     ADDR_PPUDATA
+        iny
+        cmp     #$00
+        bne     -
+        rts
+;
+;===============================================================================
 ;    PalettesData
 ;       Palettes data.
 ;===============================================================================
 ;
 PalettesData:
 ;       Background.
-        .hex     3f2d3d3c
+        .hex     15383d2a
         .hex     3f16173d
         .hex     3f20213d
         .hex     3f24253d
@@ -138,4 +166,10 @@ PalettesData:
         .hex     3f16173d
         .hex     3f20213d
         .hex     3f24253d
+;
+;===============================================================================
+;    Text.
+;===============================================================================
+;
+TxtPressStart           .db     "PRESS START";
 ;
