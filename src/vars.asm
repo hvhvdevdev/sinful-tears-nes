@@ -24,11 +24,14 @@
         SrcHi                   .equ    $01     ; Little endian.
         SrcLo                   .equ    $00
         Controller              .equ    $02
+        TempA                   .equ    $03
+        TempB                   .equ    $04
+        FrameMod255             .equ    $05
 ;
 ;===============================================================================
 ;    Ui-related.
 ;===============================================================================
 ;
-        UiCooldown              .equ    $03
-        UiCurrent               .equ    $04
+        UiCooldown              .equ    $06
+        UiCurrent               .equ    $07
 ;
