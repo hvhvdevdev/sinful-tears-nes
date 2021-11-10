@@ -39,8 +39,10 @@
 ;===============================================================================
 ;
         .base           $8000                   ; PRG-ROM starting address.
+        .include        src/macros.asm
         .include        src/preintro.asm
         .include        src/mainmenu.asm
+        .include        src/prologue.asm
 ;
 ;===============================================================================
 ;    Interrupts.
