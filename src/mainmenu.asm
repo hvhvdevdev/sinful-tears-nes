@@ -37,11 +37,14 @@ MmenLoop:
         sta     ADDR_PPUSCROLL
         sta     ADDR_PPUSCROLL
         lda     Controller
+;       Start is pressed?
         and     #%00010000
         beq     +
-        jmp     Reset
+;       True.
+        jmp     PrologStart
+;       End if.
         +
-        ;       Wait for Vblank.
+;       Wait for Vblank.
         -                       ; Start blocking.
         bit     ADDR_PPUSTATUS
         bpl     -               ; Continue blocking until Vblank.
