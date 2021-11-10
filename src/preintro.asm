@@ -17,7 +17,6 @@
 ;*                                                                             * 
 ;*******************************************************************************
 ;
-        .include src/macros.asm
 ;===============================================================================
 ;    Subroutine: Reset
 ;       Initialize system.    
@@ -70,9 +69,7 @@ Reset:
         inx
         cpx     #$20            ; Done yet?
         bne     -               ; Continue looping if not done.
-;       Enable rendering and still disable NMI.
-        lda     #%00000000
-        sta     ADDR_PPUCONTROLLER
+;       Enable rendering.
         lda     #%00011110
         sta     ADDR_PPUMASK
 ;       Clear screen.
@@ -117,15 +114,17 @@ Forerver:
 ;
 ;===============================================================================
 ;    Subroutine: NMI
-;       Handle NMI interrupt. No longer used.    
+;       Handle NMI interrupt.    
 ;===============================================================================
 ;
 NMI:    
+        pha
         lda     ADDR_PPUSTATUS
         lda     #0
         sta     ADDR_PPUSCROLL
         sta     ADDR_PPUSCROLL
         inc     FrameMod255
+        pla
         rti
 ;
 ;===============================================================================
@@ -191,6 +190,10 @@ DrawText:
 ;===============================================================================
 ;
 ClearScreen:
+;       Disable NMI and rendering.
+        ldx     #$00
+        stx     ADDR_PPUCONTROLLER
+        stx     ADDR_PPUMASK
 ;       First 6 rows.
         lda     ADDR_PPUSTATUS
         lda     #$20
@@ -272,6 +275,14 @@ ClearScreen:
         sta     ADDR_PPUDATA
         inx
         bne     -
+;       Wait for Vblank.
+        -
+        bit     ADDR_PPUSTATUS
+        bpl     -
+;       Enable rendering.
+        lda     #%00011110
+        sta     ADDR_PPUMASK
+
 ;       Return to caller.
         rts
 ;
@@ -282,7 +293,7 @@ ClearScreen:
 ;
 PalettesData:
 ;       Background.
-        .hex     15323d2a
+        .hex     3f323d2a
         .hex     3f16173d
         .hex     3f20213d
         .hex     3f24253d
