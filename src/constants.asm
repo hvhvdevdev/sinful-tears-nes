@@ -37,10 +37,13 @@
         ADDR_PPUADDR            .equ    $2006
         ADDR_PPUDATA            .equ    $2007
         ADDR_CONTROLLERPORT     .equ    $4016
+        ADDR_OAMADDR            .equ    $2003
+        ADDR_OAMDMA             .equ    $4014
 ;
 ;===============================================================================
 ;    Misc.
 ;===============================================================================
 ;
         TXT_DRAW_DELAY          .equ    #$04
+        UI_COLDDOWN             .equ    #$04
 ;

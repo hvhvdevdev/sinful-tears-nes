@@ -34,4 +34,8 @@
 ;
         UiCooldown              .equ    $06
         UiCurrent               .equ    $07
+        UiMax                   .equ    $08
+        UiCursorY               .equ    $09
+        UiCursorStartY          .equ    $0a
+        UiCursorX               .equ    $0b
 ;

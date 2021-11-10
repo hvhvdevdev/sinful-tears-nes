@@ -31,6 +31,14 @@ PrologStart:
 ;    Display disclaimer.
 ;-------------------------------------------------------------------------------
 ;
+;       Enable NMI.
+        lda     #%10000000
+        sta     ADDR_PPUCONTROLLER
+        -
+        bit     ADDR_PPUSTATUS
+        bpl     -
+        jsr     ClearScreen
+;       Draw disclaimer.
         M_DrawText      TxtFictionDisclaimer, $21, $01
         M_DrawText      TxtFictionDisclaimer1, $21, $41
         M_DrawText      TxtFictionDisclaimer2, $21, $81
@@ -55,7 +63,7 @@ PrologStart:
         lda     #%10000000
         sta     ADDR_PPUCONTROLLER
 ;       Wait for so many frames.       
-        ldx     #$30
+        ldx     #$20
         -
         bit     ADDR_PPUSTATUS
         bpl     -
@@ -73,7 +81,7 @@ PrologStart:
         lda     #%10000000
         sta     ADDR_PPUCONTROLLER
 ;       Wait for so many frames.       
-        ldx     #$30
+        ldx     #$20
         -
         bit     ADDR_PPUSTATUS
         bpl     -
@@ -91,7 +99,7 @@ PrologStart:
         lda     #%10000000
         sta     ADDR_PPUCONTROLLER
 ;       Wait for so many frames.       
-        ldx     #$30
+        ldx     #$20
         -
         bit     ADDR_PPUSTATUS
         bpl     -
@@ -103,11 +111,79 @@ PrologStart:
 ;    Display quote.
 ;-------------------------------------------------------------------------------
 ;
+        lda     ADDR_PPUSTATUS
+        lda     #$3f
+        sta     ADDR_PPUADDR
+        lda     #$01
+        sta     ADDR_PPUADDR
+        lda     #$32
+        sta     ADDR_PPUDATA
         M_DrawText      TxtNietzsche, $21, $01
         M_DrawText      TxtNietzsche1, $21, $41
         M_DrawText      TxtNietzsche2, $21, $8f
-
-;
+;       Wait for so many frames.       
+        ldx     #$60
+        -
+        bit     ADDR_PPUSTATUS
+        bpl     -
+        dex
+        bne     -
+;       Swap palettes.
+        lda     ADDR_PPUSTATUS
+        lda     #$3f 
+        sta     ADDR_PPUADDR
+        lda     #$01
+        sta     ADDR_PPUADDR
+        lda     #$22
+        sta     ADDR_PPUDATA
+;       Enable NMI.
+        lda     #%10000000
+        sta     ADDR_PPUCONTROLLER
+;       Wait for so many frames.       
+        ldx     #$20
+        -
+        bit     ADDR_PPUSTATUS
+        bpl     -
+        dex
+        bne     -
+;       Swap palettes.
+        lda     ADDR_PPUSTATUS
+        lda     #$3f 
+        sta     ADDR_PPUADDR
+        lda     #$01
+        sta     ADDR_PPUADDR
+        lda     #$02
+        sta     ADDR_PPUDATA
+;       Enable NMI.
+        lda     #%10000000
+        sta     ADDR_PPUCONTROLLER
+;       Wait for so many frames.       
+        ldx     #$20
+        -
+        bit     ADDR_PPUSTATUS
+        bpl     -
+        dex
+        bne     -
+;       Swap palettes.
+        lda     ADDR_PPUSTATUS
+        lda     #$3f 
+        sta     ADDR_PPUADDR
+        lda     #$01
+        sta     ADDR_PPUADDR
+        lda     #$01
+        sta     ADDR_PPUDATA
+;       Enable NMI.
+        lda     #%10000000
+        sta     ADDR_PPUCONTROLLER
+;       Wait for so many frames.       
+        ldx     #$20
+        -
+        bit     ADDR_PPUSTATUS
+        bpl     -
+        dex
+        bne     -
+;       Clear screen.
+        jsr     ClearScreen
 ;       Loop.
         jmp     PrologLoop
 ;

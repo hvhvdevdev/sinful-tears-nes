@@ -24,6 +24,19 @@
 ;
 MmenMain:
         jsr     ClearScreen
+        M_DrawText      TxtNewGame, $22, $6c
+        M_DrawText      TxtContinue, $22, $ac
+        lda     #$02
+        sta     UiMax
+        ldx     #$4a
+        ldy     #$97
+        jsr     UiStart
+        lda     #$00
+        cmp     UiCurrent
+        bne     +
+        jmp     PrologStart
+        +
+        jmp     Reset
         jmp     MmenLoop
 ;
 ;===============================================================================
@@ -49,4 +62,13 @@ MmenLoop:
         bit     ADDR_PPUSTATUS
         bpl     -               ; Continue blocking until Vblank.
         jmp     MmenLoop
+;
+;===============================================================================
+;    Text.
+;===============================================================================
+;
+TxtNewGame              .db     "NEW GAME"
+                        .db     0
+TxtContinue             .db     "CONTINUE"
+                        .db     0
 ;

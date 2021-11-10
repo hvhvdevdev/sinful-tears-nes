@@ -43,6 +43,7 @@
         .include        src/preintro.asm
         .include        src/mainmenu.asm
         .include        src/prologue.asm
+        .include        src/ui.asm
 ;
 ;===============================================================================
 ;    Interrupts.

@@ -123,6 +123,19 @@ NMI:
         lda     #0
         sta     ADDR_PPUSCROLL
         sta     ADDR_PPUSCROLL
+;       Ui-related.
+        lda     UiCursorY
+        sta     $200
+        lda     #$fe
+        sta     $201
+        lda     #00000010
+        sta     $202
+        lda     UiCursorX
+        sta     $203
+        lda     #$00
+        sta     ADDR_OAMADDR
+        lda     #$02
+        sta     ADDR_OAMDMA
         inc     FrameMod255
         pla
         rti
@@ -280,7 +293,7 @@ ClearScreen:
         bit     ADDR_PPUSTATUS
         bpl     -
 ;       Enable rendering.
-        lda     #%00011110
+        lda     #%00011000
         sta     ADDR_PPUMASK
 
 ;       Return to caller.
