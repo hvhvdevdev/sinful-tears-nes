@@ -132,6 +132,7 @@ NMI:
         sta     $202
         lda     UiCursorX
         sta     $203
+        
         lda     #$00
         sta     ADDR_OAMADDR
         lda     #$02

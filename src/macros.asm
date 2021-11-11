@@ -22,7 +22,7 @@
 ;    
 ;===============================================================================
 ;
-.macro  M_DrawText TextSrc, PosHigh, PosLow
+.macro  M_DrawText      TextSrc, PosHigh, PosLow
         lda     #PosHigh
         sta     TempA
         lda     #PosLow
@@ -32,5 +32,33 @@
         lda     #>TextSrc
         sta     SrcHi
         jsr     DrawText
+.endm
+;
+;===============================================================================
+;    Macro: M_DrawBox
+;    
+;===============================================================================
+;
+        i       =       0
+        p       =       0
+.macro  M_DrawBox       Pos, Width, BodyHeight 
+        ldy     #>Pos
+        ldx     #<Pos
+        lda     #Width
+        jsr     DrawBoxUpper
+        i       =       1
+        .rept   BodyHeight
+        p       =       (i * $20) + Pos
+        ldy     #>p
+        ldx     #<p
+        lda     #Width
+        jsr     DrawBoxBody
+        i       =       i + 1
+        .endr
+        p       =       (i * $20) + Pos
+        ldy     #>p
+        ldx     #<p
+        lda     #Width
+        jsr     DrawBoxLower
 .endm
 ;

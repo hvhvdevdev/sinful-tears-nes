@@ -44,6 +44,7 @@
         .include        src/mainmenu.asm
         .include        src/prologue.asm
         .include        src/ui.asm
+        .include        src/dgn.asm
 ;
 ;===============================================================================
 ;    Interrupts.

@@ -24,11 +24,12 @@
 ;
 MmenMain:
         jsr     ClearScreen
+        M_DrawBox       $222a,  $0c, $05
         M_DrawText      TxtNewGame, $22, $6c
         M_DrawText      TxtContinue, $22, $ac
         lda     #$02
         sta     UiMax
-        ldx     #$4a
+        ldx     #$57
         ldy     #$97
         jsr     UiStart
         lda     #$00

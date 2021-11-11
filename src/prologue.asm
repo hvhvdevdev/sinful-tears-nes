@@ -184,6 +184,8 @@ PrologStart:
         bne     -
 ;       Clear screen.
         jsr     ClearScreen
+;       Start game.
+        jsr     DgnStart
 ;       Loop.
         jmp     PrologLoop
 ;

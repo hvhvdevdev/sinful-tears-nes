@@ -91,11 +91,142 @@ UiLoop:
         adc     #$10
         dex
         bne     -
-        ina
         sta     UiCursorY
 ;       Wait Vblank.
         -
         bit     ADDR_PPUSTATUS
         bpl     -
         jmp     UiLoop
+;
+;===============================================================================
+;    Subroutine: DrawBoxUpper
+;       
+;===============================================================================
+;
+DrawBoxUpper:
+        pha
+        -
+        bit     ADDR_PPUSTATUS
+        ; bpl     -
+        lda     #$00
+        sta     ADDR_PPUCONTROLLER
+        sta     ADDR_PPUMASK
+;       Reset latch.
+        bit     ADDR_PPUSTATUS
+;       Set PPUADDR
+        sty     ADDR_PPUADDR
+        stx     ADDR_PPUADDR
+        pla
+        tax
+;       Top left.
+        lda     #$01
+        sta     ADDR_PPUDATA
+        dex
+        dex
+;       Line.
+        -
+        lda     #$02
+        sta     ADDR_PPUDATA
+        dex
+        bne     -
+;       Top right.
+        ldx     #$03
+        stx     ADDR_PPUDATA
+;       Enable rendering.
+        -
+        bit     ADDR_PPUSTATUS
+        ; bpl     -
+        lda     #%10000000
+        sta     ADDR_PPUCONTROLLER
+        lda     #%00011000
+        sta     ADDR_PPUMASK
+        rts         
+;
+;===============================================================================
+;    Subroutine: DrawBoxLower
+;       
+;===============================================================================
+;
+DrawBoxLower:
+        pha
+        -
+        bit     ADDR_PPUSTATUS
+        ; bpl     -
+        lda     #$00
+        sta     ADDR_PPUCONTROLLER
+        sta     ADDR_PPUMASK
+;       Reset latch.
+        bit     ADDR_PPUSTATUS
+;       Set PPUADDR
+        sty     ADDR_PPUADDR
+        stx     ADDR_PPUADDR
+        pla
+        tax
+;       Bottom left.
+        lda     #$07
+        sta     ADDR_PPUDATA
+        dex
+        dex
+;       Line.
+        -
+        lda     #$08
+        sta     ADDR_PPUDATA
+        dex
+        bne     -
+;       Bottom right.
+        ldx     #$09
+        stx     ADDR_PPUDATA
+;       Enable rendering.
+        -
+        bit     ADDR_PPUSTATUS
+        ; bpl     -
+        lda     #%10000000
+        sta     ADDR_PPUCONTROLLER
+        lda     #%00011000
+        sta     ADDR_PPUMASK
+        rts         
+;
+;===============================================================================
+;    Subroutine: DrawBoxBody
+;       
+;===============================================================================
+;
+DrawBoxBody:
+        pha
+        -
+        bit     ADDR_PPUSTATUS
+        ; bpl     -
+        lda     #$00
+        sta     ADDR_PPUCONTROLLER
+        sta     ADDR_PPUMASK
+;       Reset latch.
+        bit     ADDR_PPUSTATUS
+;       Set PPUADDR
+        sty     ADDR_PPUADDR
+        stx     ADDR_PPUADDR
+        pla
+        tax
+;       Top left.
+        lda     #$04
+        sta     ADDR_PPUDATA
+        dex
+        dex
+;       Line.
+        -
+        lda     #$00
+        sta     ADDR_PPUDATA
+        dex
+        bne     -
+;       Top right.
+        ldx     #$06
+        stx     ADDR_PPUDATA
+;       Enable rendering.
+        -
+        bit     ADDR_PPUSTATUS
+        ; bpl     -
+        lda     #%10000000
+        sta     ADDR_PPUCONTROLLER
+        lda     #%00011000
+        sta     ADDR_PPUMASK
+        rts         
 ;
