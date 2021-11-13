@@ -340,6 +340,51 @@ DgnDrawView:
         rts
 ;
 ;===============================================================================
+;    Subroutine: DgnHandleInput
+;    
+;===============================================================================
+;
+DgnHandleInput:
+;       Cooldown?
+        lda     #$00
+        cmp     UiCooldown
+        beq     ++
+        dec     UiCooldown
+        jmp     +
+        ++
+;       Right key.
+        lda     Controller
+        and     #%00000001
+        beq     ++
+        inc     DgnDirection
+        lda     #$04
+        cmp     DgnDirection
+        bne     ++
+        lda     #$00
+        sta     DgnDirection
+        ++
+;       Left key.
+        lda     Controller
+        and     #%00000010
+        beq     ++
+        dec     DgnDirection
+        lda     #$ff
+        cmp     DgnDirection
+        bne     ++
+        lda     #$03
+        sta     DgnDirection
+        ++
+;       Any key?
+        lda     Controller
+        cmp     #$00
+        beq     ++
+        lda     #UI_COLDDOWN
+        sta     UiCooldown
+        ++
+        +
+        rts
+;
+;===============================================================================
 ;    Text.
 ;===============================================================================
 ;
@@ -363,13 +408,4 @@ TxtHerbs                .db     "HERBS"
                         .db     0
 TxtDrink                .db     "E.DRINK"
                         .db     0
-;
-;===============================================================================
-;    Subroutine: DgnHandleInput
-;    
-;===============================================================================
-;
-DgnHandleInput:
-
-        rts
 ;
