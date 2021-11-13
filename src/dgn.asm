@@ -68,6 +68,24 @@ DgnLoop:
 ;       Disable rendering.
         lda     #$00
         sta     ADDR_PPUCONTROLLER
+        jsr     DgnDrawView
+        lda     #$00
+        sta     ADDR_PPUSCROLL
+        sta     ADDR_PPUSCROLL
+        lda     #%10000000
+        sta     ADDR_PPUCONTROLLER
+        -
+        bit     ADDR_PPUSTATUS
+        bpl     -
+;
+        jmp     DgnLoop
+;
+;===============================================================================
+;    Subroutine: DgnDrawView
+;    
+;===============================================================================
+;
+DgnDrawView:
         bit     ADDR_PPUSTATUS
         lda     #$20
         sta     ADDR_PPUADDR
@@ -300,18 +318,16 @@ DgnLoop:
         sta     ADDR_PPUADDR
         lda     #$8b
         sta     ADDR_PPUDATA
-        lda     #$20
-;
-        lda     #$00
-        sta     ADDR_PPUSCROLL
-        sta     ADDR_PPUSCROLL
-        lda     #%10000000
-        sta     ADDR_PPUCONTROLLER
-        -
-        bit     ADDR_PPUSTATUS
-        bpl     -
-;
-        jmp     DgnLoop
+;       Horizontal line.
+        M_WriteToPPU    $212a, $89
+        M_WriteToPPUMore       $89
+        M_WriteToPPUMore       $89
+        M_WriteToPPUMore       $89
+        M_WriteToPPU    $208a, $88
+        M_WriteToPPUMore       $88
+        M_WriteToPPUMore       $88
+        M_WriteToPPUMore       $88
+        rts
 ;
 ;===============================================================================
 ;    Text.
