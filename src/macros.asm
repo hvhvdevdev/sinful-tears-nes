@@ -62,3 +62,27 @@
         jsr     DrawBoxLower
 .endm
 ;
+;===============================================================================
+;    Macro: M_WriteToPPU
+;    
+;===============================================================================
+;
+.macro  M_WriteToPPU    Pos, Value
+        lda     #>Pos
+        sta     ADDR_PPUADDR
+        lda     #<Pos
+        sta     ADDR_PPUADDR
+        lda     #Value
+        sta     ADDR_PPUDATA
+.endm
+;
+;===============================================================================
+;    Macro: M_WriteToPPUMore
+;    
+;===============================================================================
+;
+.macro  M_WriteToPPUMore        Value
+        lda     #Value
+        sta     ADDR_PPUDATA
+.endm
+;
