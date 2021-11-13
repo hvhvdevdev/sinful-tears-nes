@@ -1,5 +1,3 @@
 build.bat
-main.nes
-main.fns
-main.nes.deb
+main.ne*
 .vscode
