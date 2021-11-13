@@ -107,13 +107,17 @@ DgnDrawView:
         .rept   19
         M_WriteToPPUMore        $00
         .endr
+        M_WriteToPPU    $20c2, $00
+        .rept   19
+        M_WriteToPPUMore        $00
+        .endr
         lda     #$00
         sta     ADDR_PPUSCROLL
         sta     ADDR_PPUSCROLL
         -
         bit     ADDR_PPUSTATUS
         bpl     -
-        M_WriteToPPU    $20c2, $00
+        M_WriteToPPU    $20e2, $00
         .rept   19
         M_WriteToPPUMore        $00
         .endr
@@ -168,33 +172,33 @@ DgnDrawView:
         stx     ADDR_PPUDATA
         +
 ;       Next row.
-        bit     ADDR_PPUSTATUS
-        lda     #$20
-        sta     ADDR_PPUADDR
-        lda     #$86
-        sta     ADDR_PPUADDR
-        ldx     #$80
-        stx     ADDR_PPUDATA
-        inx
-        stx     ADDR_PPUDATA
-        inx     
-        stx     ADDR_PPUDATA
-        inx     
-        stx     ADDR_PPUDATA
-;       Previous row.
-        bit     ADDR_PPUSTATUS
-        lda     #$21
-        sta     ADDR_PPUADDR
-        lda     #$26
-        sta     ADDR_PPUADDR
-        ldx     #$8c
-        stx     ADDR_PPUDATA
-        inx
-        stx     ADDR_PPUDATA
-        inx     
-        stx     ADDR_PPUDATA
-        inx     
-        stx     ADDR_PPUDATA
+;         bit     ADDR_PPUSTATUS
+;         lda     #$20
+;         sta     ADDR_PPUADDR
+;         lda     #$86
+;         sta     ADDR_PPUADDR
+;         ldx     #$80
+;         stx     ADDR_PPUDATA
+;         inx
+;         stx     ADDR_PPUDATA
+;         inx     
+;         stx     ADDR_PPUDATA
+;         inx     
+;         stx     ADDR_PPUDATA
+; ;       Previous row.
+;         bit     ADDR_PPUSTATUS
+;         lda     #$21
+;         sta     ADDR_PPUADDR
+;         lda     #$26
+;         sta     ADDR_PPUADDR
+;         ldx     #$8c
+;         stx     ADDR_PPUDATA
+;         inx
+;         stx     ADDR_PPUDATA
+;         inx     
+;         stx     ADDR_PPUDATA
+;         inx     
+;         stx     ADDR_PPUDATA
 ;       Right side.
         lda     DgnView
         and     #%01000100
@@ -226,18 +230,18 @@ DgnDrawView:
         stx     ADDR_PPUDATA
         +
 ;       Next row.
-        lda     #$20
-        sta     ADDR_PPUADDR
-        lda     #$8e
-        sta     ADDR_PPUADDR
-        ldx     #$8c
-        stx     ADDR_PPUDATA
-        inx
-        stx     ADDR_PPUDATA
-        inx     
-        stx     ADDR_PPUDATA
-        inx     
-        stx     ADDR_PPUDATA
+        ; lda     #$20
+        ; sta     ADDR_PPUADDR
+        ; lda     #$8e
+        ; sta     ADDR_PPUADDR
+        ; ldx     #$8c
+        ; stx     ADDR_PPUDATA
+        ; inx
+        ; stx     ADDR_PPUDATA
+        ; inx     
+        ; stx     ADDR_PPUDATA
+        ; inx     
+        ; stx     ADDR_PPUDATA
 ;       Near bottom row.
         ; lda     #$21
         ; sta     ADDR_PPUADDR
@@ -252,6 +256,9 @@ DgnDrawView:
         ; inx     
         ; stx     ADDR_PPUDATA
 ;       Vertical lines.
+        lda     DgnView
+        and     #%10011001
+        beq     +
         lda     #$21
         sta     ADDR_PPUADDR
         lda     #$25
@@ -288,7 +295,11 @@ DgnDrawView:
         sta     ADDR_PPUADDR
         lda     #$8a
         sta     ADDR_PPUDATA
+        +
 ;       Near middle?
+        lda     DgnView
+        and     #%10001000
+        bne     +
         lda     #$21
         sta     ADDR_PPUADDR
         lda     #$09
@@ -314,7 +325,11 @@ DgnDrawView:
         lda     #$8a
         sta     ADDR_PPUDATA
         lda     #$20
+        +
 ;       Right Vertical lines.
+        lda     DgnView
+        and     #%11001101
+        beq     +
         lda     #$21
         sta     ADDR_PPUADDR
         lda     #$32
@@ -351,7 +366,11 @@ DgnDrawView:
         sta     ADDR_PPUADDR
         lda     #$8b
         sta     ADDR_PPUDATA
+        +
 ;       Near middle?
+        lda     DgnView
+        and     #%10001000
+        bne     +
         lda     #$21
         sta     ADDR_PPUADDR
         lda     #$0e
@@ -376,15 +395,20 @@ DgnDrawView:
         sta     ADDR_PPUADDR
         lda     #$8b
         sta     ADDR_PPUDATA
+        +
 ;       Horizontal line.
-        ; M_WriteToPPU    $212a, $89
-        ; M_WriteToPPUMore       $89
-        ; M_WriteToPPUMore       $89
-        ; M_WriteToPPUMore       $89
-        ; M_WriteToPPU    $208a, $88
-        ; M_WriteToPPUMore       $88
-        ; M_WriteToPPUMore       $88
-        ; M_WriteToPPUMore       $88
+        lda     DgnView
+        and     #%10001000
+        bne     +
+        M_WriteToPPU    $212a, $89
+        M_WriteToPPUMore       $89
+        M_WriteToPPUMore       $89
+        M_WriteToPPUMore       $89
+        M_WriteToPPU    $208a, $88
+        M_WriteToPPUMore       $88
+        M_WriteToPPUMore       $88
+        M_WriteToPPUMore       $88
+        +
 ;       Longer horizontal line.
         lda     DgnView
         and     #%10001000
