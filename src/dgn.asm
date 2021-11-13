@@ -68,6 +68,7 @@ DgnLoop:
 ;       Disable rendering.
         lda     #$00
         sta     ADDR_PPUCONTROLLER
+        jsr     DgnHandleInput
         jsr     DgnDrawView
         lda     #$00
         sta     ADDR_PPUSCROLL
@@ -327,6 +328,15 @@ DgnDrawView:
         M_WriteToPPUMore       $88
         M_WriteToPPUMore       $88
         M_WriteToPPUMore       $88
+;       Longer horizontal line.
+        M_WriteToPPU    $2066, $88
+        .rept   11
+        M_WriteToPPUMore $88
+        .endr
+        M_WriteToPPU    $2146, $89
+        .rept   11
+        M_WriteToPPUMore $89
+        .endr
         rts
 ;
 ;===============================================================================
@@ -349,8 +359,17 @@ TxtNameAlexei           .db     "ALEXEI"
                         .db     0
 TxtGold                 .db     "CREDIT"
                         .db     0
-TxtHerbs                 .db     "HERBS"
+TxtHerbs                .db     "HERBS"
                         .db     0
-TxtDrink                 .db     "E.DRINK"
+TxtDrink                .db     "E.DRINK"
                         .db     0
+;
+;===============================================================================
+;    Subroutine: DgnHandleInput
+;    
+;===============================================================================
+;
+DgnHandleInput:
+
+        rts
 ;
