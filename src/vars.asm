@@ -46,4 +46,5 @@
         DgnPosX                 .equ    $0c
         DgnPosY                 .equ    $0d
         DgnDirection            .equ    $0e
+        DgnView                 .equ    $0f
 ;

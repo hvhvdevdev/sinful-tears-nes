@@ -69,6 +69,14 @@ DgnLoop:
         lda     #$00
         sta     ADDR_PPUCONTROLLER
         jsr     DgnHandleInput
+        lda     #%00001100
+        ldx     DgnDirection
+        inx
+        -
+        rol
+        dex
+        bne     -
+        sta     DgnView
         jsr     DgnDrawView
         lda     #$00
         sta     ADDR_PPUSCROLL
@@ -87,24 +95,54 @@ DgnLoop:
 ;===============================================================================
 ;
 DgnDrawView:
+        M_WriteToPPU    $2062, $00
+        .rept   19
+        M_WriteToPPUMore        $00
+        .endr
+        M_WriteToPPU    $2082, $00
+        .rept   19
+        M_WriteToPPUMore        $00
+        .endr
+        M_WriteToPPU    $20a2, $00
+        .rept   19
+        M_WriteToPPUMore        $00
+        .endr
+        lda     #$00
+        sta     ADDR_PPUSCROLL
+        sta     ADDR_PPUSCROLL
+        -
+        bit     ADDR_PPUSTATUS
+        bpl     -
+        M_WriteToPPU    $20c2, $00
+        .rept   19
+        M_WriteToPPUMore        $00
+        .endr
+        M_WriteToPPU    $2102, $00
+        .rept   19
+        M_WriteToPPUMore        $00
+        .endr
+        M_WriteToPPU    $2122, $00
+        .rept   19
+        M_WriteToPPUMore        $00
+        .endr
+        M_WriteToPPU    $2142, $00
+        .rept   19
+        M_WriteToPPUMore        $00
+        .endr
+        lda     #$00
+        sta     ADDR_PPUSCROLL
+        sta     ADDR_PPUSCROLL
+        -
+        bit     ADDR_PPUSTATUS
+        bpl     -
+;       Top left.
+        lda     DgnView
+        and     #%00010001
+        beq     +
         bit     ADDR_PPUSTATUS
         lda     #$20
         sta     ADDR_PPUADDR
         lda     #$62
-        sta     ADDR_PPUADDR
-        ldx     #$80
-        stx     ADDR_PPUDATA
-        inx
-        stx     ADDR_PPUDATA
-        inx     
-        stx     ADDR_PPUDATA
-        inx     
-        stx     ADDR_PPUDATA
-;       Next row.
-        bit     ADDR_PPUSTATUS
-        lda     #$20
-        sta     ADDR_PPUADDR
-        lda     #$86
         sta     ADDR_PPUADDR
         ldx     #$80
         stx     ADDR_PPUDATA
@@ -128,6 +166,21 @@ DgnDrawView:
         stx     ADDR_PPUDATA
         inx     
         stx     ADDR_PPUDATA
+        +
+;       Next row.
+        bit     ADDR_PPUSTATUS
+        lda     #$20
+        sta     ADDR_PPUADDR
+        lda     #$86
+        sta     ADDR_PPUADDR
+        ldx     #$80
+        stx     ADDR_PPUDATA
+        inx
+        stx     ADDR_PPUDATA
+        inx     
+        stx     ADDR_PPUDATA
+        inx     
+        stx     ADDR_PPUDATA
 ;       Previous row.
         bit     ADDR_PPUSTATUS
         lda     #$21
@@ -143,37 +196,14 @@ DgnDrawView:
         inx     
         stx     ADDR_PPUDATA
 ;       Right side.
+        lda     DgnView
+        and     #%01000100
+        beq     +
         lda     #$20
         sta     ADDR_PPUADDR
         lda     #$72
         sta     ADDR_PPUADDR
         ldx     #$8c
-        stx     ADDR_PPUDATA
-        inx
-        stx     ADDR_PPUDATA
-        inx     
-        stx     ADDR_PPUDATA
-        inx     
-        stx     ADDR_PPUDATA
-;       Next row.
-        lda     #$20
-        sta     ADDR_PPUADDR
-        lda     #$8e
-        sta     ADDR_PPUADDR
-        ldx     #$8c
-        stx     ADDR_PPUDATA
-        inx
-        stx     ADDR_PPUDATA
-        inx     
-        stx     ADDR_PPUDATA
-        inx     
-        stx     ADDR_PPUDATA
-;       Near bottom row.
-        lda     #$21
-        sta     ADDR_PPUADDR
-        lda     #$2e
-        sta     ADDR_PPUADDR
-        ldx     #$80
         stx     ADDR_PPUDATA
         inx
         stx     ADDR_PPUDATA
@@ -194,6 +224,33 @@ DgnDrawView:
         stx     ADDR_PPUDATA
         inx     
         stx     ADDR_PPUDATA
+        +
+;       Next row.
+        lda     #$20
+        sta     ADDR_PPUADDR
+        lda     #$8e
+        sta     ADDR_PPUADDR
+        ldx     #$8c
+        stx     ADDR_PPUDATA
+        inx
+        stx     ADDR_PPUDATA
+        inx     
+        stx     ADDR_PPUDATA
+        inx     
+        stx     ADDR_PPUDATA
+;       Near bottom row.
+        ; lda     #$21
+        ; sta     ADDR_PPUADDR
+        ; lda     #$2e
+        ; sta     ADDR_PPUADDR
+        ; ldx     #$80
+        ; stx     ADDR_PPUDATA
+        ; inx
+        ; stx     ADDR_PPUDATA
+        ; inx     
+        ; stx     ADDR_PPUDATA
+        ; inx     
+        ; stx     ADDR_PPUDATA
 ;       Vertical lines.
         lda     #$21
         sta     ADDR_PPUADDR
@@ -320,23 +377,31 @@ DgnDrawView:
         lda     #$8b
         sta     ADDR_PPUDATA
 ;       Horizontal line.
-        M_WriteToPPU    $212a, $89
-        M_WriteToPPUMore       $89
-        M_WriteToPPUMore       $89
-        M_WriteToPPUMore       $89
-        M_WriteToPPU    $208a, $88
-        M_WriteToPPUMore       $88
-        M_WriteToPPUMore       $88
-        M_WriteToPPUMore       $88
+        ; M_WriteToPPU    $212a, $89
+        ; M_WriteToPPUMore       $89
+        ; M_WriteToPPUMore       $89
+        ; M_WriteToPPUMore       $89
+        ; M_WriteToPPU    $208a, $88
+        ; M_WriteToPPUMore       $88
+        ; M_WriteToPPUMore       $88
+        ; M_WriteToPPUMore       $88
 ;       Longer horizontal line.
+        lda     DgnView
+        and     #%10001000
+        beq     +
         M_WriteToPPU    $2066, $88
         .rept   11
         M_WriteToPPUMore $88
         .endr
+        +
+        lda     DgnView
+        and     #%10001000
+        beq     +
         M_WriteToPPU    $2146, $89
         .rept   11
         M_WriteToPPUMore $89
         .endr
+        +
         rts
 ;
 ;===============================================================================
@@ -362,6 +427,7 @@ DgnHandleInput:
         bne     ++
         lda     #$00
         sta     DgnDirection
+        ; jsr     ClearScreen
         ++
 ;       Left key.
         lda     Controller
@@ -373,6 +439,7 @@ DgnHandleInput:
         bne     ++
         lda     #$03
         sta     DgnDirection
+        ; jsr     ClearScreen
         ++
 ;       Any key?
         lda     Controller
